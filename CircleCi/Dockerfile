@@ -7,7 +7,7 @@ LABEL version = "1.0"
 LABEL created = "19/06/2021"
 
 # Initialise global values
-ENV     TERM = xterm
+ENV     TERM=xterm
 WORKDIR /root/
 
 # Install system dependencies
@@ -24,4 +24,9 @@ RUN dnf install -y gettext
 
 # Copy resources
 ADD "config/" "/root/"
+
+# Install Oracle jdk 11
+COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
+RUN rpm -i jdk-11.0.11_linux-x64_bin.rpm
+RUN rm *
 
