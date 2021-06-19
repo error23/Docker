@@ -1,10 +1,11 @@
 FROM fedora:34
 
 # Metadata
-LABEL author  = "error23"
-LABEL email   = "error23.d@gmail.com"
-LABEL version = "1.0"
-LABEL created = "19/06/2021"
+LABEL author     = "error23"
+LABEL email      = "error23.d@gmail.com"
+LABEL version    = "1.0"
+LABEL created    = "19/06/2021"
+LABEL maintainer = "error32 <error23.d@gmail.com>"
 
 # Initialise global values
 ENV     TERM=xterm
