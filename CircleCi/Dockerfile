@@ -24,11 +24,10 @@ RUN dnf install -y maven
 RUN dnf install -y gettext
 
 # Copy resources
-ADD "config/" "/root/"
+COPY "config/" "/root/"
 
 # Install Oracle jdk 11
-ADD CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
-RUN ls
-RUN rpm --force --nosignature -ivh "jdk-11.0.11_linux-x64_bin.rpm"
+COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
+RUN rpm --force --nosignature -ivh 'jdk-11.0.11_linux-x64_bin.rpm'
 RUN rm *
 
