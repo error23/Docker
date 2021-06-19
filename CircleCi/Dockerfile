@@ -35,8 +35,10 @@ COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm /root/jdk.rpm
 RUN rpm --force --nosignature -ivh jdk.rpm
 RUN rm *
 
+#configure git
 RUN git config --global user.email "error23.d@gmail.com"
 RUN git config --global user.name "error23"
 
+# start commands
 CMD systemctl start docker
 CMD bash
