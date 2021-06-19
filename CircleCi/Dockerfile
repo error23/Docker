@@ -12,6 +12,8 @@ ENV     TERM=xterm
 WORKDIR /root/
 
 # Install system dependencies
+RUN dnf -y install dnf-plugins-core
+RUN dnf config-manager --add-repo https://download.docker.com/linux/fedora/docker-ce.repo
 RUN dnf update -y
 RUN dnf upgrade -y
 
@@ -23,6 +25,7 @@ RUN dnf install -y git
 RUN dnf install -y git-lfs
 RUN dnf install -y maven
 RUN dnf install -y gettext
+RUN dnf install docker-ce docker-ce-cli containerd.io
 
 # Copy resources
 COPY "config/" "/root/"
