@@ -1,0 +1,4 @@
+let g:netrw_dirhistmax  =10
+let g:netrw_dirhist_cnt =2
+let g:netrw_dirhist_1='/home/error23/Documents/projets/entreprise/localeyes'
+let g:netrw_dirhist_2='/home/error23/Documents/projets/entreprise/localeyes/scripte'
