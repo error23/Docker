@@ -25,7 +25,7 @@ RUN dnf install -y git
 RUN dnf install -y git-lfs
 RUN dnf install -y maven
 RUN dnf install -y gettext
-RUN dnf install docker-ce docker-ce-cli containerd.io
+RUN dnf install -y docker-ce docker-ce-cli containerd.io
 
 # Copy resources
 COPY "config/" "/root/"
