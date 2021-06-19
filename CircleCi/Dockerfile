@@ -19,6 +19,7 @@ RUN dnf install -y fortune-mod
 RUN dnf install -y cowsay
 RUN dnf install -y vim-ansible vim-command-t vim-devicons vim-enhanced vim-gitgutter vim-javabrowser vim-nerdtree vim-nerdtree-git-plugin vim-omnicppcomplete vim-powerline vim-syntastic-c vim-syntastic-cpp vim-syntastic-css vim-syntastic-html vim-syntastic-java vim-syntastic-json vim-syntastic-lua vim-syntastic-sh vim-syntastic-text vim-syntastic-vim vim-syntastic-xml vim-syntastic-yaml vim-taglist vim-toml vim-trailing-whitespace
 RUN dnf install -y git
+RUN dnf install -y git-lfs
 RUN dnf install -y maven
 RUN dnf install -y gettext
 
