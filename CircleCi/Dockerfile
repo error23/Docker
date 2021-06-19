@@ -27,6 +27,6 @@ ADD "config/" "/root/"
 
 # Install Oracle jdk 11
 COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
-RUN rpm -i jdk-11.0.11_linux-x64_bin.rpm
+RUN rpm -i jdk-11.0.11_linux-x64_bin.rpm 2> /dev/null
 RUN rm *
 
