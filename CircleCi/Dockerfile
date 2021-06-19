@@ -26,8 +26,8 @@ RUN dnf install -y gettext
 ADD "config/" "/root/"
 
 # Install Oracle jdk 11
-COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
+ADD CircleCi/jdk-11.0.11_linux-x64_bin.rpm .
 RUN ls
-RUN rpm --force --nosignature -i jdk-11.0.11_linux-x64_bin.rpm
+RUN rpm --force --nosignature -ivh "jdk-11.0.11_linux-x64_bin.rpm"
 RUN rm *
 
