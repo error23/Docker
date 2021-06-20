@@ -26,7 +26,7 @@ RUN dnf install -y vim-ansible vim-command-t vim-devicons vim-enhanced vim-gitgu
 COPY "config/" "/root/"
 
 # Install Oracle jdk 11
-COPY CircleCi/jdk-11.0.11_linux-x64_bin.rpm /root/jdk.rpm
+COPY Fedora/jdk-11.0.11_linux-x64_bin.rpm /root/jdk.rpm
 RUN rpm --force --nosignature -ivh jdk.rpm
 RUN rm *
 
