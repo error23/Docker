@@ -9,4 +9,4 @@
 #############################################################
 #!/bin/bash
 
-java -jar $JAVA_ARGS /bin/*jar $SPRING_ARGS | tee -a log/spring-booot.log
+java -jar $JAVA_ARGS bin/*jar $SPRING_ARGS | tee -a log/spring-booot.log

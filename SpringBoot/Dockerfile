@@ -29,4 +29,4 @@ RUN chmod +x bin/postgres-start.sh
 COPY SpringBoot/spring-boot-start.sh bin
 RUN chmod +x bin/spring-boot-start.sh
 
-ENTRYPOINT su postgres -c bin/postgres-start.sh && /bin/bash
+ENTRYPOINT su postgres -c bin/postgres-start.sh && bin/spring-boot-start.sh && /bin/bash
