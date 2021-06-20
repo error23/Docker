@@ -12,10 +12,15 @@ RUN dnf install -y postgresql
 RUN dnf install -y postgresql-server
 RUN dnf install -y postgresql-contrib
 
-# configure postgresql
-RUN touch /var/log/postgresql && chown postgres:postgres /var/log/postgresql
-COPY SpringBoot/postgres-start.sh /bin
-RUN chmod +x /bin/postgres-start.sh
-WORKDIR /var/lib/pgsql
+# General configuration
+RUN ln -s /var/lib/pgsql /srv/
+RUN ln -s /var/log/ /srv/
+RUN mkdir /srv/bin
+WORKDIR /srv
 
-ENTRYPOINT su postgres -c /bin/postgres-start.sh && /bin/bash
+# configure postgresql
+RUN touch log/postgresql && chown postgres:postgres log/postgresql
+COPY SpringBoot/postgres-start.sh bin
+RUN chmod +x bin/postgres-start.sh
+
+ENTRYPOINT su postgres -c bin/postgres-start.sh && /bin/bash
