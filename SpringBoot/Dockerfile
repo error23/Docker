@@ -13,9 +13,11 @@ RUN dnf install -y postgresql-server
 RUN dnf install -y postgresql-contrib
 
 # General configuration
+COPY config/ /var/lib/pgsql
 RUN ln -s /var/lib/pgsql /srv/
 RUN ln -s /var/log/ /srv/
 RUN mkdir /srv/bin
+RUN mkdir /srv/sql && chown root:postgres /srv/sql && chmod 774 /srv/sql
 WORKDIR /srv
 
 # configure postgresql
