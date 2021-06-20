@@ -18,7 +18,7 @@ if [ ! -f pgsql/data/PG_VERSION ]; then
 	rm pgsql/password
 fi
 
-pg_ctl -D pgsql/data -l log/postgresql start
+pg_ctl -D pgsql/data -l log/postgresql.log start
 
 createdb -U$DB_USER --lc-collate=$LANG --lc-ctype=$LANG --template="template0" $DB_NAME
 

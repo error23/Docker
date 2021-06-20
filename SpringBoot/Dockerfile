@@ -21,8 +21,12 @@ RUN mkdir /srv/sql && chown root:postgres /srv/sql && chmod 774 /srv/sql
 WORKDIR /srv
 
 # configure postgresql
-RUN touch log/postgresql && chown postgres:postgres log/postgresql
+RUN touch log/postgresql.log && chown postgres:postgres log/postgresql.log
 COPY SpringBoot/postgres-start.sh bin
 RUN chmod +x bin/postgres-start.sh
+
+# configure spring boot
+COPY SpringBoot/spring-boot-start.sh bin
+RUN chmod +x bin/spring-boot-start.sh
 
 ENTRYPOINT su postgres -c bin/postgres-start.sh && /bin/bash
