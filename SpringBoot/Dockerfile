@@ -7,6 +7,9 @@ LABEL version    = "1.1"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
+# Environement variables
+ENV PATH=$PATH:/srv/bin
+
 # Install system dependencies
 RUN dnf install -y postgresql
 RUN dnf install -y postgresql-server
@@ -29,4 +32,4 @@ RUN chmod +x bin/postgres-start.sh
 COPY SpringBoot/spring-boot-start.sh bin
 RUN chmod +x bin/spring-boot-start.sh
 
-ENTRYPOINT su postgres -c bin/postgres-start.sh && bin/spring-boot-start.sh && /bin/bash
+ENTRYPOINT su postgres -c postgres-start.sh && spring-boot-start.sh && /bin/bash
