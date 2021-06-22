@@ -22,6 +22,10 @@ ENV LC_TELEPHONE="fr_FR.UTF-8"
 ENV LC_MEASUREMENT="fr_FR.UTF-8"
 ENV LC_IDENTIFICATION="fr_FR.UTF-8"
 
+# Set timezone to Paris
+RUN rm -rf /etc/localtime
+RUN ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
+
 # Initialise global values
 ENV TERM=xterm
 ENV JAVA_HOME=/usr/java/jdk-11.0.11/
