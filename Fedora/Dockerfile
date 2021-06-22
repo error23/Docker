@@ -7,6 +7,21 @@ LABEL version    = "1.2"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
+# Setup locale to french
+ENV LANG=fr_FR.UTF-8
+ENV LC_CTYPE="fr_FR.UTF-8"
+ENV LC_NUMERIC="fr_FR.UTF-8"
+ENV LC_TIME="fr_FR.UTF-8"
+ENV LC_COLLATE="fr_FR.UTF-8"
+ENV LC_MONETARY="fr_FR.UTF-8"
+ENV LC_MESSAGES="fr_FR.UTF-8"
+ENV LC_PAPER="fr_FR.UTF-8"
+ENV LC_NAME="fr_FR.UTF-8"
+ENV LC_ADDRESS="fr_FR.UTF-8"
+ENV LC_TELEPHONE="fr_FR.UTF-8"
+ENV LC_MEASUREMENT="fr_FR.UTF-8"
+ENV LC_IDENTIFICATION="fr_FR.UTF-8"
+
 # Initialise global values
 ENV TERM=xterm
 ENV JAVA_HOME=/usr/java/jdk-11.0.11/
