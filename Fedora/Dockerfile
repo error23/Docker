@@ -3,12 +3,16 @@ FROM fedora:34
 # Metadata
 LABEL author     = "error23"
 LABEL email      = "error23.d@gmail.com"
-LABEL version    = "1.1"
+LABEL version    = "1.2"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
 # Initialise global values
-ENV     TERM=xterm
+ENV TERM=xterm
+ENV JAVA_HOME=/usr/java/jdk-11.0.11/
+ENV JDK_HOME=/usr/java/jdk-11.0.11/
+ENV JAVAC=/usr/java/jdk-11.0.11/bin/javac
+ENV PATH=$JAVA_HOME:$JAVA_HOME/bin:$PATH
 WORKDIR /root/
 
 # Install system dependencies

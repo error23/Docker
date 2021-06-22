@@ -167,32 +167,3 @@ fi
 
 export GPG_TTY=$(tty)
 
-# Java home settings
-JAVA_HOME=/usr/java/jdk-11.0.11/
-JAVAC=$JAVA_HOME/bin/javac
-
-# Gradle bin and gradle home settings
-GRADLE_BIN=/usr/local/gradle-6.3/bin/
-GRADLE_USER_HOME=/home/error23/.gradle
-
-# Add gradle bin to path
-PATH=$GRADLE_BIN:$PATH
-
-# Android sdk home settings
-ANDROID_HOME=/home/error23/Documents/sdk/android/
-
-# Add android sdk to the path
-PATH=$ANDROID_HOME:$PATH
-PATH=$ANDROID_HOME/platform-tools:$PATH
-PATH=$ANDROID_HOME/tools:$PATH
-
-# Redefine path to add skripte folder
-PATH=/home/error23/Documents/skripte:./:$PATH
-
-# Export env values
-export JAVA_HOME
-export JAVAC
-export ANDROID_HOME
-export GRADLE_USER_HOME
-export PATH
-
