@@ -48,7 +48,8 @@ fi
 
 echo "$prompt Deploying release $CIRCLE_TAG to docker hub [ * ]"
 
-docker push $dockerRepositor:$CIRCLE_TAG
+docker login -u $DOCKER_REPOSITORY_USER -p $DOCKER_REPOSITORY_PASSWORD
+docker push $DOCKER_REPOSITORY:$CIRCLE_TAG
 
 if [ $? -eq 0 ]; then
 	echo "$prompt Deploying release $CIRCLE_TAG to docker hub $successTag"
