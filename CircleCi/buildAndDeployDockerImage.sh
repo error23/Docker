@@ -1,3 +1,4 @@
+#!/bin/bash
 #############################################################
 # Fichier     :  buildAndDeployDockerImage.sh
 # Auteur      :  ERROR23
@@ -7,54 +8,90 @@
 # Date        :  07/11/2018
 # Description :
 #############################################################
-#!/bin/bash
 
-# Declare common script variable
-# declare colors
-export redForeGround="$(tput bold)$(tput setaf 1)"
-export greenForeGround="$(tput bold)$(tput setaf 2)"
-export cyanForeGround="$(tput bold)$(tput setaf 6)"
+# Source usefull commands
+source /root/bin/init.conf
 
-# Declare some other variables
-export prompt="CROW >"
-export successTag="$cyanForeGround[$greenForeGround OK $cyanForeGround]"
-export failTag="$cyanForeGround[$redForeGround FAIL $cyanForeGround]"
-
-echo $greenForeGround
+# Print welcome message
+echo $blueForeGround
 figlet -c CROW DOCKER BUILDER
 echo $cyanForeGround
 
-echo "$prompt Detecting git tag [ * ]"
+println "Detecting git tag [*]"
 if [[ -n $1 ]]; then
 	CIRCLE_TAG=$1
 fi
 
 if [[ -n $CIRCLE_TAG ]]; then
-	echo "$prompt Git tag $CIRCLE_TAG detected $successTag"
+	println "Git tag $CIRCLE_TAG detected $successTag"
 else
-	echo "$prompt Git tag not detected $failTag"
+	printerr "Git tag not detected $failTag"
 	exit 0
 fi
 
-echo "$prompt Building release docker imagage for version $CIRCLE_TAG [ * ]"
-docker build -t $dockerRepository:$CIRCLE_TAG target
+println "Detecting docker repository [*]"
+if [[ -n $2 ]]; then
+	DOCKER_REPOSITORY=$2
+fi
 
-if [ $? -eq 0 ]; then
-	echo "$prompt Building release docker imagage for version $CIRCLE_TAG $successTag"
+if [[ -n $DOCKER_REPOSITORY ]]; then
+	println "Docker repository $DOCKER_REPOSITORY detected $successTag"
 else
-	echo "$prompt Building release docker imagage for version $CIRCLE_TAG $failTag"
+	printerr "Docker repository not detected $failTag"
 	exit -1
 fi
 
-echo "$prompt Deploying release $CIRCLE_TAG to docker hub [ * ]"
+println "Detecting docker hub user [*]"
+if [[ -n $3 ]]; then
+	DOCKER_REPOSITORY_USER=$3
+fi
 
-docker login -u $DOCKER_REPOSITORY_USER -p $DOCKER_REPOSITORY_PASSWORD
-docker push $DOCKER_REPOSITORY:$CIRCLE_TAG
+if [[ -n $DOCKER_REPOSITORY_USER ]]; then
+	println "Docker hub user $DOCKER_REPOSITORY_USER detected $successTag"
+else
+	printerr "Docker hub user not detected $failTag"
+	exit -1
+fi
+
+println "Detecting docker hub password [*]"
+if [[ -n $4 ]]; then
+	DOCKER_REPOSITORY_PASSWORD=$4
+fi
+
+if [[ -n $DOCKER_REPOSITORY_PASSWORD ]]; then
+	println "Docker hub password $DOCKER_REPOSITORY_PASSWORD detected $successTag"
+else
+	printerr "Docker hub password not detected $failTag"
+	exit -1
+fi
+
+println "Building release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG [*]"
+
+docker build -t "$DOCKER_REPOSITORY":"$CIRCLE_TAG" target
 
 if [ $? -eq 0 ]; then
-	echo "$prompt Deploying release $CIRCLE_TAG to docker hub $successTag"
+	println "Building release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG $successTag"
 else
-	echo "$prompt Deploying release $CIRCLE_TAG to docker hub $failTag"
+	printerr "Building release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG $failTag"
+	exit -1
+fi
+
+println "Login to docker hub [*]"
+docker login -u "$DOCKER_REPOSITORY_USER" -p "$DOCKER_REPOSITORY_PASSWORD"
+
+if [ $? -eq 0 ]; then
+	println "Login to docker hub $successTag"
+else
+	printerr "Login to docker hub $failTag"
+fi
+
+println "Deploying release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG to docker hub [*]"
+docker push "$DOCKER_REPOSITORY":"$CIRCLE_TAG"
+
+if [ $? -eq 0 ]; then
+	println "Deploying release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG to docker hub $successTag"
+else
+	printerr "Deploying release docker image $DOCKER_REPOSITORY for version $CIRCLE_TAG to docker hub $failTag"
 	exit -1
 fi
 

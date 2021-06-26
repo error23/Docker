@@ -7,9 +7,6 @@ LABEL version    = "1.2"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
-# Environement variables
-ENV PATH=/root/bin:$PATH
-
 # Install system dependencies
 RUN dnf install -y git
 RUN dnf install -y git-lfs
@@ -26,10 +23,9 @@ RUN git config --global user.email "error23.d@gmail.com"
 RUN git config --global user.name "error23"
 
 # Add usefull scipts
-RUN mkdir /root/bin
-COPY CircleCi/setMavenVersion.sh /root/bin
-COPY CircleCi/buildAndDeployDockerImage.sh /root/bin
-RUN chmod +x /root/bin/*
+COPY CircleCi/setMavenVersion.sh $SCRIPTE_BIN
+COPY CircleCi/buildAndDeployDockerImage.sh $SCRIPTE_BIN
+RUN chmod +x $SCRIPTE_BIN/*.sh
 
 # Start commands
 CMD systemctl start docker

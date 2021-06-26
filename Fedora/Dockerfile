@@ -28,11 +28,12 @@ RUN rm -rf /etc/localtime
 RUN ln -s /usr/share/zoneinfo/Europe/Paris /etc/localtime
 
 # Initialise global values
-ENV TERM=xterm
+ENV TERM=xterm-256color
 ENV JAVA_HOME=/usr/java/jdk-11.0.11
-ENV JDK_HOME=/usr/java/jdk-11.0.11/
-ENV JAVAC=/usr/java/jdk-11.0.11/bin/javac
-ENV PATH=$JAVA_HOME:$JAVA_HOME/bin:$PATH
+ENV JDK_HOME=/usr/java/jdk-11.0.11
+ENV JAVAC=$JDK_HOME/bin/javac
+ENV SCRIPTE_BIN=/root/bin
+ENV PATH=$JAVA_HOME:$JAVA_HOME/bin:$SCRIPTE_BIN:$PATH
 WORKDIR /root/
 
 # Install system dependencies
@@ -47,13 +48,17 @@ RUN dnf install -y cowsay
 RUN dnf install -y figlet
 RUN dnf install -y vim-ansible vim-command-t vim-devicons vim-enhanced vim-gitgutter vim-javabrowser vim-nerdtree vim-nerdtree-git-plugin vim-omnicppcomplete vim-powerline vim-syntastic-c vim-syntastic-cpp vim-syntastic-css vim-syntastic-html vim-syntastic-java vim-syntastic-json vim-syntastic-lua vim-syntastic-sh vim-syntastic-text vim-syntastic-vim vim-syntastic-xml vim-syntastic-yaml vim-taglist vim-toml vim-trailing-whitespace
 
-# Copy resources
+# Copy global configurations
 COPY "config/" "/root/"
+
+# Set scriptes permissions
+RUN rm *
+RUN mkdir $SCRIPTE_BIN
+COPY Fedora/init.conf $SCRIPTE_BIN
 
 # Install Oracle jdk 11
 COPY Fedora/jdk-11.0.11_linux-x64_bin.rpm /root/jdk.rpm
 RUN rpm --force --nosignature -ivh jdk.rpm
-RUN rm *
+RUN rm jdk.rpm
 
 ENTRYPOINT /bin/bash
-
