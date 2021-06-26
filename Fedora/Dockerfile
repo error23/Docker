@@ -34,6 +34,8 @@ ENV JDK_HOME=/usr/java/jdk-11.0.11
 ENV JAVAC=$JDK_HOME/bin/javac
 ENV SCRIPTE_BIN=/root/bin
 ENV PATH=$JAVA_HOME:$JAVA_HOME/bin:$SCRIPTE_BIN:$PATH
+
+RUN chmod +x /root/
 WORKDIR /root/
 
 # Install system dependencies
