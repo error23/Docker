@@ -86,7 +86,7 @@ println "Updating database [*]"
 for file in $sqlToExecute; do
 
 	println "Updating database with $file [*]"
-	psql -d"$DB_NAME" -U"$DB_USER" < "$file"
+	psql -d"$DB_NAME" -U"$DB_USER" < "$(envsubst < "$file")"
 
 	if [ $? -eq 0 ]; then
 		println "Updating database with $file $successTag"
