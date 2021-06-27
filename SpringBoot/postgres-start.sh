@@ -27,6 +27,7 @@ println "Setting up postgresql local credentials for $DB_USER, $DB_PASSWORD $suc
 println "Checking database initialisation [*]"
 if [ ! -f pgsql/data/PG_VERSION ]; then
 
+	println "Database isn't initialized"
 	println "Initialising database for $LANG locale [*]"
 
 	echo "$DB_PASSWORD" > pgsql/password
@@ -40,6 +41,8 @@ if [ ! -f pgsql/data/PG_VERSION ]; then
 	fi
 
 	rm pgsql/password
+else
+	println "Database is already initialized"
 fi
 println "Checking database initialisation $successTag"
 
@@ -56,14 +59,24 @@ else
 fi
 
 # Create new database
-println "Creating database $DB_NAME for user $DB_USER with locale $LANG [*]"
-createdb -U"$DB_USER" --lc-collate="$LANG" --lc-ctype="$LANG" --template="template0" "$DB_NAME"
+println "Checking for $DB_NAME database [*]"
+psql -U"$DB_USER" -dpostgres -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1
+
 if [ $? -eq 0 ]; then
-	println "Creating database $DB_NAME for user $DB_USER with locale $LANG $successTag"
+	println "Database $DB_NAME already exists"
 else
-	printerr "Creating database $DB_NAME for user $DB_USER with locale $LANG $failTag"
-	exit -1
+	println "Database $DB_NAME doesn't exists"
+	println "Creating database $DB_NAME for user $DB_USER with locale $LANG [*]"
+	createdb -U"$DB_USER" --lc-collate="$LANG" --lc-ctype="$LANG" --template="template0" "$DB_NAME"
+	if [ $? -eq 0 ]; then
+		println "Creating database $DB_NAME for user $DB_USER with locale $LANG $successTag"
+	else
+		printerr "Creating database $DB_NAME for user $DB_USER with locale $LANG $failTag"
+		exit -1
+	fi
 fi
+
+println "Checking for $DB_NAME database $successTag"
 
 #Execute all scripts in sql folder
 println "Updating database [*]"
