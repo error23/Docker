@@ -60,12 +60,16 @@ fi
 
 # Create new database
 println "Checking for $DB_NAME database [*]"
+initializeDatabase=0
 psql -U"$DB_USER" -dpostgres -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1
 
 if [ $? -eq 0 ]; then
 	println "Database $DB_NAME already exists"
+	initializeDatabase=1
 else
 	println "Database $DB_NAME doesn't exists"
+	initializeDatabase=2
+
 	println "Creating database $DB_NAME for user $DB_USER with locale $LANG [*]"
 	createdb -U"$DB_USER" --lc-collate="$LANG" --lc-ctype="$LANG" --template="template0" "$DB_NAME"
 	if [ $? -eq 0 ]; then
@@ -80,10 +84,10 @@ println "Checking for $DB_NAME database $successTag"
 
 #Execute all scripts in sql folder
 println "Updating database [*]"
-for file in $(ls sql/ | sort); do
+for file in $(find sql/ -maxdepth $initializeDatabase -name "*.sql" | sort); do
 
 	println "Updating database with $file [*]"
-	psql -d"$DB_NAME" -U"$DB_USER" < sql/"$file"
+	psql -d"$DB_NAME" -U"$DB_USER" < "$file"
 
 	if [ $? -eq 0 ]; then
 		println "Updating database with $file $successTag"
