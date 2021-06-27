@@ -1,4 +1,4 @@
-FROM error23/fedora:1.3
+FROM error23/fedora:1.2
 
 # Metadata
 LABEL author     = "error23"
