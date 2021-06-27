@@ -3,7 +3,7 @@ FROM fedora:34
 # Metadata
 LABEL author     = "error23"
 LABEL email      = "error23.d@gmail.com"
-LABEL version    = "1.2"
+LABEL version    = "1.3"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
@@ -51,12 +51,14 @@ RUN dnf install -y figlet
 RUN dnf install -y vim-ansible vim-command-t vim-devicons vim-enhanced vim-gitgutter vim-javabrowser vim-nerdtree vim-nerdtree-git-plugin vim-omnicppcomplete vim-powerline vim-syntastic-c vim-syntastic-cpp vim-syntastic-css vim-syntastic-html vim-syntastic-java vim-syntastic-json vim-syntastic-lua vim-syntastic-sh vim-syntastic-text vim-syntastic-vim vim-syntastic-xml vim-syntastic-yaml vim-taglist vim-toml vim-trailing-whitespace
 
 # Copy global configurations
-COPY "config/" "/root/"
+COPY config/ /root/
 
 # Set scriptes permissions
 RUN rm *
 RUN mkdir $SCRIPTE_BIN
 COPY Fedora/init.conf $SCRIPTE_BIN
+COPY Fedora/bcrypt.sh $SCRIPTE_BIN
+RUN chmod +x $SCRIPTE_BIN/*.sh
 
 # Install Oracle jdk 11
 COPY Fedora/jdk-11.0.11_linux-x64_bin.rpm /root/jdk.rpm
