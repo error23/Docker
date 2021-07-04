@@ -1,9 +1,9 @@
-FROM error23/fedora:1.3
+FROM error23/fedora:2.0
 
 # Metadata
 LABEL author     = "error23"
 LABEL email      = "error23.d@gmail.com"
-LABEL version    = "1.3"
+LABEL version    = "2.0"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
@@ -18,9 +18,9 @@ RUN dnf install -y postgresql-contrib
 # General configuration
 COPY config/ /var/lib/pgsql
 RUN ln -s /var/lib/pgsql /srv/
-RUN ln -s /var/log/ /srv/
+RUN ln -s /var/log /srv/
 RUN mkdir /srv/bin
-RUN mkdir /srv/sql && chown root:postgres /srv/sql && chmod 774 /srv/sql
+RUN mkdir /srv/sqlToExecute && chown postgres:postgres /srv/sqlToExecute && chmod 774 /srv/sqlToExecute
 WORKDIR /srv
 
 # Configure postgresql

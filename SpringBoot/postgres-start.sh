@@ -60,14 +60,14 @@ fi
 
 # Create new database
 println "Checking for $DB_NAME database [*]"
-sqlToExecute=$(find sql/ -maxdepth 1 -name "*.sql" | sort -V)
+sqlToExecute=$(find sqlToExecute/ -maxdepth 1 -name "*.sql" | sort -V)
 psql -U"$DB_USER" -dpostgres -tc "SELECT 1 FROM pg_database WHERE datname = '$DB_NAME'" | grep -q 1
 
 if [ $? -eq 0 ]; then
 	println "Database $DB_NAME already exists"
 else
 	println "Database $DB_NAME doesn't exists"
-	sqlToExecute=$(find sql/ -maxdepth 1 -name "*.sql" | sort -V && find sql/ -mindepth 2 -maxdepth 2 -name "*.sql" | sort -V)
+	sqlToExecute=$(find sqlToExecute/ -mindepth 2 -maxdepth 2 -name "*.sql" | sort -V && find sqlToExecute/ -maxdepth 1 -name "*.sql" | sort -V)
 
 	println "Creating database $DB_NAME for user $DB_USER with locale $LANG [*]"
 	createdb -U"$DB_USER" --lc-collate="$LANG" --lc-ctype="$LANG" --template="template0" "$DB_NAME"
@@ -86,10 +86,11 @@ println "Updating database [*]"
 for file in $sqlToExecute; do
 
 	println "Updating database with $file [*]"
-	envsubst < "$file" > fileToExecute
-	psql -d"$DB_NAME" -U"$DB_USER" < fileToExecute
+	envsubst < "$file" > sqlToExecute/fileToExecute
+	psql -d"$DB_NAME" -U"$DB_USER" < sqlToExecute/fileToExecute
 
 	if [ $? -eq 0 ]; then
+		rm sqlToExecute/fileToExecute
 		println "Updating database with $file $successTag"
 	else
 		printerr "Updating database with $file $failTag"
