@@ -1,9 +1,9 @@
-FROM error23/fedora:1.3
+FROM error23/fedora:2.0
 
 # Metadata
 LABEL author     = "error23"
 LABEL email      = "error23.d@gmail.com"
-LABEL version    = "1.3"
+LABEL version    = "2.0"
 LABEL created    = "19/06/2021"
 LABEL maintainer = "error32 <error23.d@gmail.com>"
 
