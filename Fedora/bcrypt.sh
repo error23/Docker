@@ -12,4 +12,3 @@ source init.conf
 
 assertParamValid $1
 htpasswd -nbBC 5 PASSWORD $1
-
