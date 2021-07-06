@@ -29,13 +29,28 @@ function runScripts() {
 		println "Running script $file [*]"
 		chmod +x "$file"
 		$file
-		source $file.export
 
 		if [ $? -eq 0 ]; then
 			println "Running script $file $successTag"
 		else
 			printerr "Running script $file $failTag"
 			hasErrors='true'
+			continue
+		fi
+
+		if [ -f "$file".export ]; then
+
+			println "Sourcing $file.export [*]"
+
+			#shellcheck source=file.export
+			source "$file".export
+
+			if [ $? -eq 0 ]; then
+				println "Sourcing $file.export $successTag"
+			else
+				printerr "Sourcing $file.export $failTag"
+				hasErrors='true'
+			fi
 		fi
 	done
 
