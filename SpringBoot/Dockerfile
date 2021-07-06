@@ -20,6 +20,8 @@ COPY config/ /var/lib/pgsql
 RUN ln -s /var/lib/pgsql /srv/
 RUN ln -s /var/log /srv/
 RUN mkdir /srv/bin
+RUN mkdir /srv/bin/preDeploy
+RUN mkdir /srv/bin/postDeploy
 RUN mkdir /srv/sqlToExecute && chown postgres:postgres /srv/sqlToExecute && chmod 774 /srv/sqlToExecute
 WORKDIR /srv
 
@@ -32,4 +34,8 @@ RUN chmod +x bin/postgres-start.sh
 COPY SpringBoot/spring-boot-start.sh bin
 RUN chmod +x bin/spring-boot-start.sh
 
-ENTRYPOINT su postgres -c postgres-start.sh && spring-boot-start.sh && /bin/bash
+# Configure entrypoint
+COPY SpringBoot/entrypoint.sh bin
+RUN chmod +x bin/entrypoint.sh
+
+ENTRYPOINT entrypoint.sh

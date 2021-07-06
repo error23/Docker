@@ -55,7 +55,7 @@ if [ $? -eq 0 ]; then
 else
 	printerr "Starting postgresql server $failTag"
 	printerr "more informations in log/postgresql.log"
-	exit -1
+	exit -2
 fi
 
 # Create new database
@@ -75,7 +75,7 @@ else
 		println "Creating database $DB_NAME for user $DB_USER with locale $LANG $successTag"
 	else
 		printerr "Creating database $DB_NAME for user $DB_USER with locale $LANG $failTag"
-		exit -1
+		exit -3
 	fi
 fi
 
@@ -94,7 +94,7 @@ for file in $sqlToExecute; do
 		println "Updating database with $file $successTag"
 	else
 		printerr "Updating database with $file $failTag"
-		exit -1
+		exit -4
 	fi
 done
 println "Updating database $successTag"
